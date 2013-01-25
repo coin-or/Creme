@@ -9,10 +9,7 @@ Creme/configure -text
 Creme/configure.ac -text
 Creme/creme-uninstalled.pc.in -text
 Creme/creme.pc.in -text
-Creme/data/discrAnalysis -text
 Creme/data/format.txt -text
-Creme/data/netlib -text
-Creme/data/random -text
 Creme/inc/config_creme.h.in -text
 Creme/src/Base/LICENSE -text
 Creme/src/Base/Makefile.am -text
