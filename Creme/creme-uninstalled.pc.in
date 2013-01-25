@@ -1,0 +1,10 @@
+prefix=@prefix@
+libdir=@ABSBUILDDIR@/src
+
+Name: Creme
+Description: Randomized Thermal Relaxation methods for Maximum Feasible Subsystems
+URL: https://projects.coin-or.org/Creme
+Version: @PACKAGE_VERSION@
+Libs: ${libdir}/libCreme.la @CREMELIB_PCLIBS@
+Cflags: -I@abs_source_dir@/src -I@abs_source_dir@/src -I@ABSBUILDDIR@/src
+Requires: @CREMELIB_PCREQUIRES@

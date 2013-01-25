@@ -1,0 +1,35 @@
+#!/bin/sh
+
+srcdir="@srcdir@"
+
+echo Testing Creme on some instances at `pwd`: trying $srcdir/data/*.bz2
+echo
+
+failed=0
+
+for j in $srcdir/data/*.bz2
+
+do
+
+    cp $j .
+    name=`basename $j`
+
+    ../src/Base/creme -n 1000 -o `basename $name .bz2`.lp $name >tmpfile 2>&1
+    grep "Completed" tmpfile > /dev/null 2>&1
+    if test $? != 0; then
+      failed=1
+      echo "Test on $name    FAILED!"
+      echo
+      echo " ---- 8< ---- Start of test program output ---- 8< ----"
+      cat tmpfile 1>&2
+      echo " ---- 8< ----  End of test program output  ---- 8< ----"
+      echo
+    else
+      echo "Test on $name    PASSED"
+    fi
+    rm -f tmpfile
+    rm -f $name
+
+done
+
+exit $failed

@@ -1,0 +1,15 @@
+Crème installation instructions
+-------------------------------
+
+The only external needed by Crème for now is BuildTools, which is only necessary if you do development work on Crème and which you can download as follows:
+
+svn co https://projects.coin-or.org/svn/BuildTools/stable/0.7 BuildTools
+
+The rest is as usual:
+
+mkdir build && \
+cd build && \
+../configure && \
+make -s
+
+File format and some sample instance files are described in the data/ directory.

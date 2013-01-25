@@ -1,0 +1,38 @@
+RTR is an implementation of a randomized thermal relaxation method. It
+is described in
+
+E. Amaldi, P. Belotti, R. Hauser, Randomized Relaxation Methods for
+the Maximum Feasible Subsystem Problem. In M. Jünger, V. Kaibel (eds.),
+Integer Programming and Combinatorial Optimization, 11th International
+IPCO Conference, Berlin, Germany, June 8-10, 2005, pages 249-264, 2005.
+
+http://www.springerlink.com/content/wnhkbrwqncartxly
+
+Relaxation methods have been introduced by Agmon and by Motzkin and
+Schoenberg in the '50s. Given a system of linear inequalities
+
+A x ≥ b
+
+these methods attempt to find a point x satisfying all these
+inequalities as follows:
+
+1. choose an initial x^0
+2. set k=0
+3. while (not (A x^k ≥ b)) {
+4.    choose row (a^i, b_i) such that a^i x^k < b_i
+5.    set x^(k+1) = x^k + alpha a^i
+6. }
+
+The implementation is a randomized, thermal variant that aims at
+solving the MAXimum Feasible Subset (MAXFS):
+
+  Given an infeasible system Ax≥b, find a feasible subsystem A'x≥b'
+  that is of maximum cardinality, i.e., with the maximum number of
+  rows.
+
+Through option -o, one can output on a file (or stdout) the largest 
+feasible subsystem found so far.
+
+For instructions on how to install and use this package, please look
+at the INSTALL file. Note that this package needs CoinUtils from
+COIN-OR (www.coin-or.org).
