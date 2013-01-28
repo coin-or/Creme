@@ -1,8 +1,8 @@
 -----------------------------------
-File format for Crème
+File format for Creme
 -----------------------------------
 
-All files read by (the current version of) Crème are bzip2'ed text
+All files read by (the current version of) Creme are bzip2'ed text
 files that contain a (possibly infeasible) system Ax <= b with the
 following scheme (all fields are separated by a tab):
 
@@ -21,11 +21,11 @@ with a list of numbers (separated by tab) such that:
   - the first number is K, the number of variables in the inequality
 
   - the second and third are l and u, respectively. Note: either
-    l=-1e30 or u=1e30, i.e., for now Crème only deals with
+    l=-1e30 or u=1e30, i.e., for now Creme only deals with
     inequalities;
 
   - the remaining 2K elements are pairs (index,coefficient), i.e.,
     i(k) and a_{i(k)}
 
 A translator from .lp to this compact format is in the works and will
-be included in an early revision of Crème.
+be included in an early revision of Creme.
