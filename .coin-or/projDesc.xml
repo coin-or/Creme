@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type = "text/xsl" href = "http://www.coin-or.org/projects/autoGen.xsl"?>
+<projectData xmlns="coin-or.org"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="coin-or.org http://www.coin-or.org/projects/autoGen.xsd">
+
+        <projectBasics>
+
+                <projectName>Cr&#xe8;me</projectName>
+                <projectRepo>Creme</projectRepo>
+
+                <projectDescription>
+
+		  Cr&#xe8;me (COIN-OR RElaxation MEthod) is an
+		  implementation of a heuristic for the Maximum
+		  Feasible Subsystem (MaxFS) problem. The MaxFS
+		  problem consists of finding the subsystem of an
+		  infeasible LP such that the subsystem is feasible
+		  and contains a maximum number of constraints. Cr&#xe8;me
+		  implements a randomized and thermal variant of the
+		  relaxation method proposed by Agmon (1954) and
+		  Motzkin and Schoenberg (1954).  Cr&#xe8;me is a heuristic
+		  that updates an iterate while keeping track of the
+		  number of inequalities satisfied at each
+		  iteration. See E. Amaldi, P. Belotti, R. Hauser,
+		  Randomized Relaxation Methods for the Maximum
+		  Feasible Subsystem Problem. In M. Juenger, V. Kaibel
+		  (eds.), Integer Programming and Combinatorial
+		  Optimization, 11th International IPCO Conference,
+		  Berlin, Germany, June 8-10, 2005, pages 249-264,
+		  2005.
+
+		</projectDescription>
+		<projectShortDescription>
+		  An implementation of the randomized thermal relaxation method to find a feasible solution of the
+		  Maximum Feasible Subsystem problem.
+		</projectShortDescription>
+
+                <projectManager>Pietro Belotti (pbelott at clemson dot edu) </projectManager>
+
+                <projectHomePage>https://projects.coin-or.org/Creme</projectHomePage>
+
+                <projectLicense> Eclipse Public License 1.0 </projectLicense>
+                <projectLicenseURL>
+                    http://www.opensource.org/licenses/eclipse-1.0
+                </projectLicenseURL>
+
+                <coinLinkedProjects>
+                     <coinProject><repoName>BuildTools</repoName></coinProject>
+                 </coinLinkedProjects>
+
+		<otherLinkedPackages></otherLinkedPackages>
+
+                <projectLanguage>C</projectLanguage>
+
+                <developmentStatus>
+
+                  <activityStatus>Active</activityStatus>
+
+                  <maturityLevel>2</maturityLevel>
+
+                  <!-- DO NOT USE unless you want to override
+		       automated tracking of stable and release
+		       numbers.
+                  <stableVersionNumber>0.0</stableVersionNumber>
+ 	          <releaseNumber>0.0.0</releaseNumber>
+		  -->
+
+                </developmentStatus>
+
+                <testedPlatforms>
+
+                  <!--<platform>
+                           <operatingSystem>Microsoft Windows</operatingSystem>
+                           <compiler>MSVC++/cl</compiler>
+                     </platform>
+                     <platform>
+                           <operatingSystem>Microsoft Windows</operatingSystem>
+                           <compiler>CYGWIN/cl</compiler>
+                     </platform>
+                     <platform>
+                           <operatingSystem>Microsoft Windows</operatingSystem>
+                           <compiler>MSys/gcc</compiler>
+                     </platform>-->
+                     <platform>
+                           <operatingSystem>Linux</operatingSystem>
+                           <compiler>gcc</compiler>
+                     </platform>
+                     <!--<platform>
+                           <operatingSystem>Microsoft Windows</operatingSystem>
+                           <compiler>CYGWIN/gcc</compiler>
+                     </platform>
+                     <platform>
+                          <operatingSystem>OSX</operatingSystem>
+                          <compiler>gcc</compiler>
+                     </platform>
+                     <platform>
+                          <operatingSystem>Solaris X86</operatingSystem>
+                          <compiler>gcc</compiler>
+                     </platform>
+                     <platform>
+                          <operatingSystem>Solaris X86</operatingSystem>
+                          <compiler>sunpro</compiler>
+                      </platform>-->
+
+                </testedPlatforms>
+
+                <projectCategories>
+
+                      <category>
+                           Optimization deterministic linear
+                      </category>
+                </projectCategories>
+
+        </projectBasics>
+
+        <leftMenuLinks>
+
+                <documentation>
+		  <!-- broken  http://www.coin-or.org/Doxygen/Creme/index.html -->
+		</documentation>
+
+                <sourceCodeDownload>
+                  http://www.coin-or.org/download/source/Creme
+                </sourceCodeDownload>
+
+                <binaryDownload>
+                  <!-- broken   http://www.coin-or.org/download/binary/Creme -->
+		</binaryDownload>
+
+                <mailingList>
+                  http://list.coin-or.org/mailman/listinfo/creme
+                </mailingList>
+
+        </leftMenuLinks>
+
+</projectData>
