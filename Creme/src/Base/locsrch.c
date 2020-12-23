@@ -18,14 +18,14 @@
 #define EPS 1e-6
 #define ALPHA 0.1
 
-inline int compare_frontier (const void *one, const void *two) {
+int compare_frontier (const void *one, const void *two) {
 
   if (((const frontier *) one) -> thres < ((const frontier *) two) -> thres) return -1;
   if (((const frontier *) one) -> thres > ((const frontier *) two) -> thres) return  1;
   return 0;
 }
 
-inline int compare_dvar (const void *one, const void *two) {
+int compare_dvar (const void *one, const void *two) {
 
   if (((const dvar *) one) -> nsi > ((const dvar *) two) -> nsi) return -1;
   if (((const dvar *) one) -> nsi < ((const dvar *) two) -> nsi) return  1;
