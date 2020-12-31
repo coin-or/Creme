@@ -1,5 +1,9 @@
 // Compile it with
 // g++ -O -I/path/to/coin/include -L/path/to/coin/lib -lCoinUtils -o lp2compact lp2compact.cpp
+//
+// then call with
+//
+// lp2compact < myfile.lp | bzip2 > myfile.bz2
 
 #include "CoinFileIO.hpp"
 #include "CoinLpIO.hpp"
