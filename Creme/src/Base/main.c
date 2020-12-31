@@ -32,7 +32,7 @@ void userInterrupt () {
 }
 
 /*
- * Main 
+ * Main
  */
 
 int main (int argc, char **argv) {
@@ -82,32 +82,32 @@ int main (int argc, char **argv) {
   	              ,{0, "", 0, NULL, 0, ""}            /* THIS ENTRY ALWAYS AT THE END */
   };
 
-  options  [0].par =  &(lp.onedim);    
-  options  [1].par =  &(lp.noprep);    
-  options  [2].par =  &(lp.bigm);      
-  options  [3].par =  &(lp.norm);      
-  options  [4].par =  &(lp.invcool);   
-  options  [5].par =  &(lp.lincool);   
-  options  [6].par =  &(lp.dblrand);   
+  options  [0].par =  &(lp.onedim);
+  options  [1].par =  &(lp.noprep);
+  options  [2].par =  &(lp.bigm);
+  options  [3].par =  &(lp.norm);
+  options  [4].par =  &(lp.invcool);
+  options  [5].par =  &(lp.lincool);
+  options  [6].par =  &(lp.dblrand);
 
-  options  [7].par =  &(lp.alpha);     
-  options  [8].par =  &(lp.beta);      
-  options  [9].par =  &(lp.gammaRate); 
-  options [10].par =  &(lp.muRate);    
-  options [11].par =  &(lp.stretch);   
+  options  [7].par =  &(lp.alpha);
+  options  [8].par =  &(lp.beta);
+  options  [9].par =  &(lp.gammaRate);
+  options [10].par =  &(lp.muRate);
+  options [11].par =  &(lp.stretch);
 
-  options [12].par =  &(lp.nIter);     
-  options [13].par =  &rndseed;        
+  options [12].par =  &(lp.nIter);
+  options [13].par =  &rndseed;
 
-  options [14].par =  &(lp.timelimit); 
-  options [15].par =  &(lp.restFreq);  
-  options [16].par =  &(lp.blkcard);   
-  options [17].par =  &(lp.infinity);  
+  options [14].par =  &(lp.timelimit);
+  options [15].par =  &(lp.restFreq);
+  options [16].par =  &(lp.blkcard);
+  options [17].par =  &(lp.infinity);
 
   options [18].par =  &output;
-  options [19].par =  &help;           
-  		   	  
-  options [20].par =  NULL;                 
+  options [19].par =  &help;
+
+  options [20].par =  NULL;
 
   /*
    * default parameter values

@@ -36,12 +36,12 @@ int read_problem (sparseLP *lp,    /* LP data   */
 
   BZFILE *bzf;
 
-  int rownnz, curnnz, 
-    totrow, currow = 0, 
-    nnz, true_nnz, 
-    i, j, best, 
-    pos_i = 0, pos_d = 0, 
-    size_d, size_i, 
+  int rownnz, curnnz,
+    totrow, currow = 0,
+    nnz, true_nnz,
+    i, j, best,
+    pos_i = 0, pos_d = 0,
+    size_d, size_i,
     size_rl, size_ru,
     target_nnz,
     n_left_nnz;
@@ -77,7 +77,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
   }
 
   /*
-   * Read chunks of matrix from .bz2 file 
+   * Read chunks of matrix from .bz2 file
    */
 
   if (lp -> my_id == 0) {
@@ -95,7 +95,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
       printf ("unable to open file %s\n", *filename);
       return -1;
     }
-    
+
     printf ("%6.2f Opening bz2 file %s\n", CoinCpuTime(), *filename); fflush (stdout);
 
     bzf = BZ2_bzReadOpen (&status, f, 1, 0, NULL, 0);
@@ -103,7 +103,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
     /*
      * read scalar parameters (file header)
      */
-      
+
     bzgetint (bzf, &(lp -> c0));
     bzgetint (bzf, &(lp -> r0));
     bzgetint (bzf, &nnz);
@@ -129,7 +129,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
     /*    target_nnz = nnz / lp -> ncpus + 1; */
 
     size_i = size_d = 0;
-      
+
     bufd = NULL;
     bufi = NULL;
 
@@ -171,7 +171,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
 	printf ("%6.2f chunks %d..%d\n", CoinCpuTime (), i, mymin (lp->ncpus-1, i + CHUNKS_PER_LINE - 1));
 	/*	fflush (stdout); */
       }
-      
+
       pos_d = 2 * lp->c0;
       pos_i = 0;
 
@@ -179,11 +179,11 @@ int read_problem (sparseLP *lp,    /* LP data   */
        * read each row and enqueue coefficients and indices
        */
 
-      for (curnnz = currow = 0; 
+      for (curnnz = currow = 0;
 
-	   ((i == lp->ncpus-1) || 
-	    (curnnz < target_nnz)) && 
-	     (totrow < lp -> r0); 
+	   ((i == lp->ncpus-1) ||
+	    (curnnz < target_nnz)) &&
+	     (totrow < lp -> r0);
 
 	   currow++, totrow++) {
 
@@ -198,7 +198,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
 	/*	printf ("line %d has %d nnzs (to be drawn from %d) %d < %d/%d\n",currow, rownnz, n_left_nnz); */
 
 	n_left_nnz -= rownnz;
-	
+
 	curnnz += rownnz;
 
 	reallocate_int (pos_i, &size_i, &bufi);
@@ -218,7 +218,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
 	if ((rlb [currow] > -1e20) && (rub [currow] < 1e20) && first) {
 
 	  first = 0;
-	  printf ("warning: range constraints (first found at %d: [%f,%f]) not yet implemented\n", 
+	  printf ("warning: range constraints (first found at %d: [%f,%f]) not yet implemented\n",
 		  currow, rlb [currow], rub [currow]);
 	}
 
@@ -238,7 +238,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
 	  if ((bzgetdbl (bzf, &coe) == 1) && (*++filename)) {
 
 	    BZ2_bzReadClose (&status, bzf);
-    
+
 	    fclose (f);
 
 	    if (strcmp (*filename, "-")) f = fopen (*filename, "r");
@@ -284,13 +284,13 @@ int read_problem (sparseLP *lp,    /* LP data   */
 
 	if (!(lp->noprep)) {
 
-	  if      (((rlb [currow] > -1e20) && (lhsmax <  rlb [currow])) || 
+	  if      (((rlb [currow] > -1e20) && (lhsmax <  rlb [currow])) ||
 		   ((rub [currow] <  1e20) && (lhsmin >  rub [currow]))) { /* iis of size 1 */
-	      
+
 	    /*  printf ("iis %d: %.3e < %.3e or %.3e > %.3e\n", currow, lhsmax, rlb [currow], lhsmin, rub [currow]); */
 
-	    pos_i -= (rownnz + 1); 
-	    pos_d -=  rownnz; 
+	    pos_i -= (rownnz + 1);
+	    pos_d -=  rownnz;
 	    curnnz -= rownnz;
 	    --currow;
 
@@ -299,11 +299,11 @@ int read_problem (sparseLP *lp,    /* LP data   */
 	    true_nnz -= rownnz;
 	    target_nnz = (true_nnz) / lp -> ncpus;
 	  }
-	  else if (((rub [currow] >  1e20) || (lhsmax <= rub [currow])) && 
+	  else if (((rub [currow] >  1e20) || (lhsmax <= rub [currow])) &&
 		   ((rlb [currow] < -1e20) || (lhsmin >= rlb [currow]))) { /* tautology */
 
-	    pos_i -= (rownnz + 1); 
-	    pos_d -=  rownnz; 
+	    pos_i -= (rownnz + 1);
+	    pos_d -=  rownnz;
 	    curnnz -= rownnz;
 	    --currow;
 
@@ -322,10 +322,10 @@ int read_problem (sparseLP *lp,    /* LP data   */
 
       {
 	reallocate_double (pos_d + 2 * currow, &size_d, &bufd);
-	
+
 	for (j=currow; j>0; j--) bufd [pos_d++] = *rlb++;
 	for (j=currow; j>0; j--) bufd [pos_d++] = *rub++;
-	
+
 	rlb -= currow;
 	rub -= currow;
       }
@@ -359,13 +359,13 @@ int read_problem (sparseLP *lp,    /* LP data   */
       if (!((i+1) % CHUNKS_PER_LINE)) printf ("\n");
       */
 
-      if (i < lp->ncpus - 1) 
+      if (i < lp->ncpus - 1)
 	target_nnz = n_left_nnz / (lp->ncpus - i - 1);
     }
 
     printf   ("%6.2f done. %d rows, %d columns, %d nonzero", CoinCpuTime (), lp->r0, lp->c0, nnz);
-      
-    if (!(lp -> noprep) && (lp->niis || lp->ntaut)) 
+
+    if (!(lp -> noprep) && (lp->niis || lp->ntaut))
       printf ("\n               %d iis, %d tautologies, %d nonzero eliminated", lp->niis, lp->ntaut, nnz - true_nnz);
 
     printf ("\n");
@@ -396,7 +396,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
   rlb = lp -> rlb;
   rub = lp -> rub;
 
-  for (j=currow; j>0; j--, rub++, rlb++, rhs++) 
+  for (j=currow; j>0; j--, rub++, rlb++, rhs++)
 
     if (*rlb < -1e20) *rhs = *rub;
     else              *rhs = *rlb;
@@ -446,7 +446,7 @@ int read_problem (sparseLP *lp,    /* LP data   */
       if (norm > EPSILON) {
 
 	register double *icl = *ic;
-      
+
 	if (*rub < 1e29) {
 
 	  norm = - norm;

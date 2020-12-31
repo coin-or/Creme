@@ -28,7 +28,7 @@ int act (char ***argv, int *argc, enum etype tact, void *par) {
   case TCHAR:   if (!((*argc)--)) return -1; *(char   *) par  =        **++*argv;  break; /**< Char param */
   case TINT:    if (!((*argc)--)) return -1; *(int    *) par  = atoi   (*++*argv); break; /**< Integer param */
   case TDOUBLE: if (!((*argc)--)) return -1; *(double *) par  = atof   (*++*argv); break; /**< Double param */
-  case TSTRING: if (!((*argc)--)) return -1; 
+  case TSTRING: if (!((*argc)--)) return -1;
                 *(char **) par = (char *) realloc (*(char **) par, (1 + strlen (*++*argv)) * sizeof (char));
 		strcpy (* (char **) par, **argv); break; /**< String param */
 
@@ -45,7 +45,7 @@ int act (char ***argv, int *argc, enum etype tact, void *par) {
 
 void set_default_args (tpar *options) {
 
-  for (; options -> shortopt; options++) 
+  for (; options -> shortopt; options++)
 
     switch (options -> type) {
 
@@ -61,7 +61,7 @@ void set_default_args (tpar *options) {
 
 /*
  * Read argument line
- */ 
+ */
 
 char **readargs (int argc, char **argv, tpar *options) {
 
@@ -81,7 +81,7 @@ char **readargs (int argc, char **argv, tpar *options) {
 
     ++argv;
 
-    if ((options) && 
+    if ((options) &&
 	(** argv == '-') &&    /* arg starts with a "-"                               */
 	((*argv) [1])) {       /* not a single "-" (meaning I should read from stdin) */
 
@@ -97,15 +97,15 @@ char **readargs (int argc, char **argv, tpar *options) {
 
 	    if (!(p2 -> par)) {
 
-	      if (p2 -> type != TTOGGLE) argv++;		  
+	      if (p2 -> type != TTOGGLE) argv++;
 	      printf ("%s: not yet implemented\n", *argv);
-	    } 
+	    }
 
-	    else 
+	    else
 
 	      if (act (&argv, &argc, p2->type, (p2->par))) {
 
-		printf ("%s: missing value", *(argv-1)); 
+		printf ("%s: missing value", *(argv-1));
 		return NULL;
 	      }
 
@@ -114,7 +114,7 @@ char **readargs (int argc, char **argv, tpar *options) {
 	}
 	if (!(p2 -> shortopt)) {
 
-	  printf ("%s: unrecognized option \"--%s\"\n", pname, cumul); 
+	  printf ("%s: unrecognized option \"--%s\"\n", pname, cumul);
 	}
       }
       else {                   /** short option ("-s [val]") */
@@ -123,10 +123,10 @@ char **readargs (int argc, char **argv, tpar *options) {
 
 	  for (p2 = options; p2 -> shortopt; p2++)
 
-	    if (*cumul == p2->shortopt) { 
+	    if (*cumul == p2->shortopt) {
 
 	      if (act (&argv, &argc, p2->type, (p2->par))) {
-		printf ("%s: missing value", *(argv-1)); 
+		printf ("%s: missing value", *(argv-1));
 		return NULL;
 	      }
 	      break;
@@ -134,14 +134,14 @@ char **readargs (int argc, char **argv, tpar *options) {
 
 	  if (!(p2 -> shortopt)) {
 
-	    printf ("%s: unrecognized option \"-%c\"\n", pname, *cumul); 
+	    printf ("%s: unrecognized option \"-%c\"\n", pname, *cumul);
 	  }
 	}
       }
     }
     else {
 
-      if (!(nfiles % MALLOC_BLOCK)) 
+      if (!(nfiles % MALLOC_BLOCK))
 	filenames = (char **) realloc (filenames, (nfiles + MALLOC_BLOCK) * sizeof (char *));
 
       filenames [nfiles] = (char *) malloc ((strlen (*argv) + 1) * sizeof (char));
@@ -152,7 +152,7 @@ char **readargs (int argc, char **argv, tpar *options) {
 
   if (filenames) {
 
-    if (!(nfiles % MALLOC_BLOCK)) 
+    if (!(nfiles % MALLOC_BLOCK))
       filenames = (char **) realloc (filenames, (nfiles + 1) * sizeof (char *));
 
     filenames [nfiles] = NULL;

@@ -21,7 +21,7 @@
 
 void init_x (sparseLP *lp, double *x) {
 
-  double *lb = lp -> lb, 
+  double *lb = lp -> lb,
          *ub = lp -> ub;
 
   if (lp -> my_id == 0) {
@@ -30,7 +30,7 @@ void init_x (sparseLP *lp, double *x) {
 
     for (i = lp->c0; i > 0; --i, ++ub, ++lb)
 
-      if (*ub - *lb > 1e6) 
+      if (*ub - *lb > 1e6)
 	if (fabs (*lb) < 1e5) *x++ = *lb + drand48 ();
 	else                  *x++ = 0;/* *ub - drand48 (); */
       else                    *x++ = *lb + drand48 () * (*ub - *lb);

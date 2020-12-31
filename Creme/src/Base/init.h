@@ -38,7 +38,7 @@ static __inline void calc_lhs_block (double *z, double *coe, double *x, int *pos
 
 #pragma disjoint (*z, *coe, *x, *pos)
 
-  for (; n >= 0; --n) 
+  for (; n >= 0; --n)
     *z += coe [n] * x [pos [n]];
 }
 
@@ -50,7 +50,7 @@ static __inline void calc_lhs (double *z, int n, double *coe, double *x, int *po
 
   register int j = n / CONCURRENT_FLOPS;
 
-  for (; j > 0; --j, pos += CONCURRENT_FLOPS, 
+  for (; j > 0; --j, pos += CONCURRENT_FLOPS,
 	             coe += CONCURRENT_FLOPS)
     calc_lhs_block (z, coe, x, pos, CONCURRENT_FLOPS);
 

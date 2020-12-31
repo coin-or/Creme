@@ -44,7 +44,7 @@ int write_lp (sparseLP *lp,   /* LP data   */
 
   fprintf (f, "\\ Feasible subsystem created by Crème %d.%d\n\n"
 	   "minimize x0\n\n"
-	   "subject to\n\n", 
+	   "subject to\n\n",
 	   CREME_VERSION_MAJOR, CREME_VERSION_MINOR);
 
   for (i=0; i<lp -> rk; ++i)
@@ -59,10 +59,10 @@ int write_lp (sparseLP *lp,   /* LP data   */
   fprintf (f, "\nbounds\n");
 
   for (i=0; i < lp -> c0; ++i)
-    if (lp -> lb [i] != 0. || 
+    if (lp -> lb [i] != 0. ||
 	lp -> ub [i] < .5e30)
-      fprintf (f, "%g <= x_%d <= %g\n", 
-	       lp -> lb [i], 
+      fprintf (f, "%g <= x_%d <= %g\n",
+	       lp -> lb [i],
 	       i,
 	       lp -> ub [i]);
 

@@ -34,9 +34,9 @@ static inline double CoinCpuTime()
 
 #if defined(_MSC_VER)
   unsigned int ticksnow;        /* clock_t is same as int */
-  
+
   ticksnow = (unsigned int)clock();
-  
+
   cpu_temp = (double)((double)ticksnow/CLOCKS_PER_SEC);
 #else
   struct rusage usage;

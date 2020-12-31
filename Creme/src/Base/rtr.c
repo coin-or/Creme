@@ -88,12 +88,12 @@ int rtr (sparseLP *lp, /* description of infeasible LP  */
     printf ("==========================================================\n");
   }
 
-  for (nIter = 0; 
+  for (nIter = 0;
 
        ((lp->timelimit < 0) || (CoinCpuTime() - time <= lp -> timelimit)) &&
-	 (nIter < maxIter) && 
-	 !interrupt && 
-	 (nSatd < lp->r0); 
+	 (nIter < maxIter) &&
+	 !interrupt &&
+	 (nSatd < lp->r0);
 
        nIter++) {
 
@@ -124,16 +124,16 @@ int rtr (sparseLP *lp, /* description of infeasible LP  */
       /*
        * TO DO: Should alpha be computed locally?
        *        Should we use sumViol_loc instead?
-       */ 
+       */
 
       /*
        *  CAUTION! mu decreases in non improving iterations, but if
        *  other rules are used the alpha needs be recomputed globally
        */
 
-      temperature = alpha * sumViol / (lp -> rk - nSatd_loc); 
+      temperature = alpha * sumViol / (lp -> rk - nSatd_loc);
 
-      if (temperature > MAX_TEMP) 
+      if (temperature > MAX_TEMP)
 	temperature = MAX_TEMP;
 
       gamma = 1;
@@ -160,7 +160,7 @@ int rtr (sparseLP *lp, /* description of infeasible LP  */
       if (lp -> my_id == 0) {
 
 	printf ("%8d%c %9d %11.2f %8.2f %9d %7.3f %c\n",
-		nIter, ((whichmove == USE_LOCSRCH)? '+' : ' '), 
+		nIter, ((whichmove == USE_LOCSRCH)? '+' : ' '),
 		nSatd, temperature * gamma,
 		CoinCpuTime () - time,
 		mymax (1, (int) (mu * (lp->r0 - nSatd))),
@@ -216,7 +216,7 @@ int rtr (sparseLP *lp, /* description of infeasible LP  */
        * select a set of inequalities to be used in computing x(k+1).
        */
 
-      choose_block (lp, block, satd, nSatd_loc, 
+      choose_block (lp, block, satd, nSatd_loc,
 		    mymax (1, (int) (mu * (lp -> rk - nSatd_loc))),
 		    b_Ax, sumViol);
 

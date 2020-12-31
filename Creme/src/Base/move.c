@@ -55,7 +55,7 @@ __inline void build_dxk (int k, int *ip, double *ic, double *dxk, double z) {
  * Update points and aux. vectors for a delta vector
  */
 
-int update (sparseLP *lp, double *x, double *dx, double *b_Ax, 
+int update (sparseLP *lp, double *x, double *dx, double *b_Ax,
 	    char *sat, double *sum, double maxMod) {
 
   int i, j, dSatd = 0;
@@ -102,7 +102,7 @@ int update (sparseLP *lp, double *x, double *dx, double *b_Ax,
 	register double  delta = z    * *vc++;
 
 	if ((*pV) > 0) {
-	    
+
 	  if ((delta > 0) || ((*pV) > - delta))
 	    *sum += delta;
 	  else {
@@ -111,7 +111,7 @@ int update (sparseLP *lp, double *x, double *dx, double *b_Ax,
 	  }
 	}
 	else {
-	  
+
 	  if (delta > - (*pV)) {
 	    *sum += (*pV + delta);
 	    if  (*pS) { dSatd--; *pS = UNSATD; } /* constraint is now violated */
@@ -167,7 +167,7 @@ int move (sparseLP *lp,     /* LP data  */
   c = lp->c0;
   r = lp->rk;
 
-  if (first) { 
+  if (first) {
 
     first = 0;
 
@@ -221,7 +221,7 @@ int move (sparseLP *lp,     /* LP data  */
     for (i=c;i>0;i--, dx0++) {
     if (fabs (*dx0) > maxd) maxd = *dx0;
     if (fabs (*dx0) < mind) mind = *dx0;
-    norm += *dx0 * *dx0; 
+    norm += *dx0 * *dx0;
     }
     norm = sqrt (norm);
     dx0 -= c;
@@ -246,12 +246,12 @@ int move (sparseLP *lp,     /* LP data  */
      * stay within bounding box
      */
   }
-  
+
   dx0 -= c;
   x   -= c;
   ub  -= c;
   lb  -= c;
-  
+
   /* If one-dimensional optimization is used, tune the next point so
    * as to get the most fulfilling point in the segment
    */
@@ -271,11 +271,11 @@ int move (sparseLP *lp,     /* LP data  */
   /* {
      double summ = 0;
      for (i=0; i<c; i++, dx0++) summ += *dx0 * *dx0;
-     printf ("||dx|| = %.6f\n", log (1e-15+fabs(maxMod * sqrt(summ))) / log (10)); 
+     printf ("||dx|| = %.6f\n", log (1e-15+fabs(maxMod * sqrt(summ))) / log (10));
      dx0 -= c;
      } */
 
   /*  Update b_Ax  */
 
-  return update (lp, x, dx0, b_Ax, sat, sum, maxMod); 
+  return update (lp, x, dx0, b_Ax, sat, sum, maxMod);
 }

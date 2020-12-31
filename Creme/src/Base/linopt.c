@@ -35,7 +35,7 @@ inline int compare_abs (const void *a, const void *b) {
 
 
 /*
- * Fast vector operations 
+ * Fast vector operations
  */
 
 #ifdef RTR_USE_PRAGMAS
@@ -44,7 +44,7 @@ __inline void calc_lhs_block (double *z, double *coe, double *x, int *pos, regis
 
 #pragma disjoint (*z, *coe, *x, *pos)
 
-  for (; n >= 0; --n) 
+  for (; n >= 0; --n)
     *z += coe [n] * x [pos [n]];
 }
 
@@ -52,7 +52,7 @@ __inline void calc_lhs (double *z, int n, double *coe, double *x, int *pos) {
 
   register int j = n / CONCURRENT_FLOPS;
 
-  for (; j > 0; --j, pos += CONCURRENT_FLOPS, 
+  for (; j > 0; --j, pos += CONCURRENT_FLOPS,
 	             coe += CONCURRENT_FLOPS)
     calc_lhs_block (z, coe, x, pos, CONCURRENT_FLOPS);
 
@@ -74,8 +74,8 @@ double scan_segment (double *lambda, int nl, int *dSat, int *fSat) {
   register double *pl;
   register int i,j;
 
-  for (j  = best = 0, 
-       i  = nl-1, 
+  for (j  = best = 0,
+       i  = nl-1,
        pl = lambda; i >= 0; --i, pl++) {
 
     if (*pl > 0) j++;
@@ -99,9 +99,9 @@ double scan_segment (double *lambda, int nl, int *dSat, int *fSat) {
 
 /*
  * Merge sorted subvectors
- */ 
+ */
 
-double scan_sorted_subvectors (int k, register int nl, 
+double scan_sorted_subvectors (int k, register int nl,
 			       double *lambdas, int *displs, int *nlks,
 			       int *dSat, int *fSat) {
 
@@ -133,7 +133,7 @@ double scan_sorted_subvectors (int k, register int nl,
     for (i=k; i>0; i--) *pl++ = lambdas + *displs++;
 
     displs -= k;
-    pl     -= k; 
+    pl     -= k;
 
     /*
      * manual merge
@@ -173,7 +173,7 @@ double scan_sorted_subvectors (int k, register int nl,
 
       if (*best < 0) {
 
-	if ((--j < - nl) && !fSat) 
+	if ((--j < - nl) && !fSat)
 	  return z;
       }
       else {
@@ -202,9 +202,9 @@ double scan_sorted_subvectors (int k, register int nl,
  * unidimensional optimization
  */
 
-double one_opt (sparseLP *lp, 
-		double *dx, 
-		double *b_Ax, 
+double one_opt (sparseLP *lp,
+		double *dx,
+		double *b_Ax,
 		double stretch) {
 
   double *lambda;  /* points of intersection over the segment */
@@ -250,7 +250,7 @@ double one_opt (sparseLP *lp,
     for (j=*(il++); j>0; j--) sum += (*(pc++) * dx [*(pp++)]);
 #endif
 
-    /* does constraint i cross the segment? 
+    /* does constraint i cross the segment?
      *
      * yes, if Ax < b and A (x + dx) >= b or vice versa
      * and the crossing is before the end of the segment
@@ -262,7 +262,7 @@ double one_opt (sparseLP *lp,
          ((z >  0) && (sum > 0)))
 	&& ((z /= sum) < stretch)) {     /* z & sum have the same sign */
 
-      *lambda++ = (sum >= 0) ? z : -z; 
+      *lambda++ = (sum >= 0) ? z : -z;
       nlk++;
     }
   }

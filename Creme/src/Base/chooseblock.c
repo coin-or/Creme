@@ -50,7 +50,7 @@ void choose_block (sparseLP *lp     /* LP data                                  
 
     while (j<cardinality) {
 
-      if (!(sat [k = floor (drand48() * r)]) && 
+      if (!(sat [k = floor (drand48() * r)]) &&
 	  !(chosen [k])) {
 
 	chosen [k]   = 1;
@@ -64,7 +64,7 @@ void choose_block (sparseLP *lp     /* LP data                                  
 
     while (j<cardinality) {
 
-      if (!(sat [k = floor (drand48() * r)]) && 
+      if (!(sat [k = floor (drand48() * r)]) &&
 	  !(chosen [k]) &&
 	  (drand48 () < exp (- b_Ax [k] / relaxed_divider))) {
 
@@ -90,11 +90,11 @@ void choose_block (sparseLP *lp     /* LP data                                  
   }
 
   for (i = 5 * cardinality - 1, j = 0; j < cardinality && i >= 0; --i) {
-  
+
   const double key = drand48() * cum_weight;
   const int select = dsearch (key, cum_weights, r);
   if (chosen[select] == 0) {
-  
+
   block[j] = select;
   chosen[select] = 1;
   ++j;
@@ -123,8 +123,8 @@ inline int cum_weight_comp2(const void* w0, const void* w1)
  */
 
 /*
-static inline int lookup (const double key, 
-			  const double *v, 
+static inline int lookup (const double key,
+			  const double *v,
 			  const int length) {
 
   register int i;
@@ -172,7 +172,7 @@ inline int dsearch (double key, register double *v, int length) {
 void choose_block2 (sparseLP *lp,    // LP data
 		   int *block,      // arrays with row indices to use (last is -1)
 		   char *sat,       // fulfilled constraints
-		   int nSat,        // number of fulfilled constraints 
+		   int nSat,        // number of fulfilled constraints
                    int cardinality, // cardinality of the block
 		   double *b_Ax,    // violation vector
 		   double sumviol   // sum of all violations
@@ -194,7 +194,7 @@ void choose_block2 (sparseLP *lp,    // LP data
 
   b_Ax += rk;
 
-  for (j=0, i=rk; i>0; --i, --b_Ax) 
+  for (j=0, i=rk; i>0; --i, --b_Ax)
 
     if (!(*sat++)) {
       cum_weight += exp (- *b_Ax / sumviol);

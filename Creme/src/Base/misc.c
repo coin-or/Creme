@@ -100,7 +100,7 @@ void clearLP (sparseLP *lp) {
 /*
  *  get char from .bz2 file
  *
- * ONLY FOR DEBUGGING PURPOSES 
+ * ONLY FOR DEBUGGING PURPOSES
  * DO NOT USE WITH bzGetDouble or bzGetInt
  */
 
@@ -221,7 +221,7 @@ void create_transpose (sparseLP *lp) {
   vc -= c;
   vp -= c;
 
-  for (i=0; i<r; i++) {    
+  for (i=0; i<r; i++) {
 
     register int    *pp = *ip++;
     register double *pc = *ic++;

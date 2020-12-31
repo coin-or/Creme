@@ -65,13 +65,13 @@ int isFeas (sparseLP *lp,   /* sparse LP data                          */
 
   for (i=lp->c0; i>0; i--, lb++, ub++, x++)
     if ((*x < *lb) || (*x > *ub)) {
-      /*      printf ("%d: x_%d = %.5f out of bounds [%.4f,%.4f]\n", 
+      /*      printf ("%d: x_%d = %.5f out of bounds [%.4f,%.4f]\n",
       	      lp->my_id, lp->c0 - i, *x, *lb, *ub);*/
       return -1;
     }
 
   if (nsatd != *n) {
-    printf ("Thread %d: Warning, numbers of satisfied inequalities differ after check (%d != %d)\n", lp->my_id, *n, nsatd);  
+    printf ("Thread %d: Warning, numbers of satisfied inequalities differ after check (%d != %d)\n", lp->my_id, *n, nsatd);
     *n = nsatd;
   }
 

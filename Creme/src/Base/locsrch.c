@@ -32,7 +32,7 @@ int compare_dvar (const void *one, const void *two) {
   return 0;
 }
 
-int locsrch2 (sparseLP *lp, 
+int locsrch2 (sparseLP *lp,
 	      /*double   *x, */
 	      double   *b_Ax
 	      /*double   *dx */
@@ -48,9 +48,9 @@ int locsrch2 (sparseLP *lp,
   *    2a) sort them according to [alpha * pluses + (1-alpha) *
   *    pluses/(pluses+minuses)] select J:|J|=lp->blkcard, first |J|
   *    in ordering
-  *    
+  *
   *    or
-  *    
+  *
   *    2b) select randomly with probability dependent on [alpha *
   *    pluses + (1-alpha) * pluses/(pluses+minuses)] or uniformly
   *
@@ -125,17 +125,17 @@ int locsrch2 (sparseLP *lp,
 
     /*
 
-intersect at 
+intersect at
 
     lb < x+d < ub
 
     e_j > 0
     b - A (x + d e_j) = b - Ax - d A e_j
-b-Ax >0 
+b-Ax >0
 b-Ax - d a_j <0   -> a_j > 0
 
-b-Ax <0 
-b-Ax - d a_j >0   -> a_j < 0 
+b-Ax <0
+b-Ax - d a_j >0   -> a_j < 0
 
 up++
 
@@ -157,17 +157,17 @@ up++
 
   /*
   for (i=0; i<c; i++) {
-    if (drand48 () < *impr++) *dx++ = 
+    if (drand48 () < *impr++) *dx++ =
   }
   */
 
   return 0;
 }
 
-int locsrch (sparseLP *lp, 
-	     double   *x, 
-	     double   *b_Ax, 
-	     char     *satd, 
+int locsrch (sparseLP *lp,
+	     double   *x,
+	     double   *b_Ax,
+	     char     *satd,
 	     double   *sumViol
 	     ) {
 
@@ -250,8 +250,8 @@ int locsrch (sparseLP *lp,
         else            {cuts -> sense = 'L'; k++; if (*x < th - EPS) cursat ++;}
 
 	/*        printf ("(%d) %c=%.4f ", *pos, (cuts -> sense=='G')?'>':'<', th);*/
-	cuts++; ncuts++; 
-      } 
+	cuts++; ncuts++;
+      }
     }
 
     /*    printf ("\n");*/
@@ -314,7 +314,7 @@ int locsrch (sparseLP *lp,
 
     /*
     printf ("x%d: %d (%.3f%+.3f)\n", deltas [0] . index,
-                                     deltas [0] . nsi, x [k], 
+                                     deltas [0] . nsi, x [k],
                                      deltas [0] . delta); fflush (stdout);
     */
 
@@ -335,7 +335,7 @@ int locsrch (sparseLP *lp,
       if ((*pV) > 0) {
 
         if ((Delta > 0) || ((*pV) > - Delta))
-          *sumViol += Delta; 
+          *sumViol += Delta;
         else {
           *sumViol -= *pV;
           if (!*pS) { dSatd++; *pS = SATD; }
