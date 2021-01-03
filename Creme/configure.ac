@@ -13,7 +13,7 @@ AC_PREREQ(2.59)
 AC_INIT([Crème],[0.0trunk],[http://projects.coin-or.org/Creme])
 
 AC_COPYRIGHT(
-[Copyright 2011 Pietro Belotti.
+[Copyright 2011-2021 Pietro Belotti.
 All Rights Reserved.
 This file is part of the open source package Creme which is distributed
 under the Eclipse Public License.])
