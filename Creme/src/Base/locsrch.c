@@ -155,6 +155,9 @@ up++
   vc -= c;
   vp -= c;
 
+#ifdef RTR_MPI
+  //  MPI_Allreduce (impr, imprs, k, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+#endif
   /*
   for (i=0; i<c; i++) {
     if (drand48 () < *impr++) *dx++ =

@@ -119,7 +119,17 @@ int rtr (sparseLP *lp, /* description of infeasible LP  */
 
       nSatd_loc = init_sat (lp, satd, b_Ax, x, &sumViol_loc);
 
+#ifdef RTR_MPI
+
+      //
+      // local sum of violation -- to be dealt with
+      //
+
+      //      MPI_Reduce (&sumViol_loc, &sum_Viol, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
       sumViol = sumViol_loc;
+#else
+      sumViol = sumViol_loc;
+#endif
 
       /*
        * TO DO: Should alpha be computed locally?
@@ -143,7 +153,11 @@ int rtr (sparseLP *lp, /* description of infeasible LP  */
 /*    if ((maxIter<1000) || !(nIter % (maxIter/1000)))  */
 /*      fprintf (stderr, "\r%.1f%%", (nIter+1) * 100.0 / maxIter);  */
 
+#ifdef RTR_MPI
+    MPI_Allreduce (&nSatd_loc, &nSatd, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
+#else
     nSatd = nSatd_loc;
+#endif
 
     /*
      *   Found a better point?
@@ -155,7 +169,11 @@ int rtr (sparseLP *lp, /* description of infeasible LP  */
 
       int feask = (isFeas (lp, satd, x, &nSatd_loc)) == 3;
 
+#ifdef RTR_MPI
+      MPI_Reduce (&feask, &feas, 1, MPI_INT, MPI_LAND, 0, MPI_COMM_WORLD);
+#else
       feas = feask;
+#endif
 
       if (lp -> my_id == 0) {
 

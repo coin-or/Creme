@@ -14,6 +14,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef RTR_MPI
+#include <mpi.h>
+#endif
+
 #include "sparse.h"
 #include "init.h"
 #include "rtr.h"

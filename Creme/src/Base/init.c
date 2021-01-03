@@ -12,6 +12,11 @@
 #include <math.h>
 #include <stdlib.h>
 
+
+#ifdef RTR_MPI
+#include <mpi.h>
+#endif
+
 #include "sparse.h"
 #include "init.h"
 
@@ -39,6 +44,10 @@ void init_x (sparseLP *lp, double *x) {
     lb -= (lp -> c0);
     ub -= (lp -> c0);
   }
+
+#ifdef RTR_MPI
+  MPI_Bcast (x, lp->c0, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+#endif
 }
 
 

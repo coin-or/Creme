@@ -11,6 +11,10 @@
 #include <math.h>
 #include <stdio.h>
 
+#ifdef RTR_MPI
+#include <mpi.h>
+#endif
+
 #include "sparse.h"
 #include "linopt.h"
 #include "rtr.h"
@@ -202,9 +206,13 @@ int move (sparseLP *lp,     /* LP data  */
 #endif
   }
 
+#ifdef RTR_MPI
+  MPI_Allreduce (dxk, dx0, c, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+#else
   for (i=c; i>0; --i) *dx0++ = *dxk++;
   dxk -= c;
   dx0 -= c;
+#endif
 
   for (i=c; i>0; --i) *dxk++ = 0;
   dxk -= c;

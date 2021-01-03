@@ -15,6 +15,10 @@
 #include <signal.h>
 #include <string.h>
 
+#ifdef RTR_MPI
+#include <mpi.h>
+#endif
+
 #include "sparse.h"
 #include "lpio.h"
 #include "writelp.h"
@@ -115,8 +119,18 @@ int main (int argc, char **argv) {
 
   set_default_args (options);
 
+  /*
+   * Initialize MPI process communication
+   */
+
+#ifdef RTR_MPI
+  MPI_Init (&argc, &argv);
+  MPI_Comm_rank (MPI_COMM_WORLD, &(lp.my_id));
+  MPI_Comm_size (MPI_COMM_WORLD, &(lp.ncpus));
+#else
   lp.my_id = 0;
   lp.ncpus = 1;
+#endif
 
   /*
    * parse command line
@@ -158,7 +172,9 @@ int main (int argc, char **argv) {
 
   srand48 (rndseed + lp.my_id);
 
+#ifndef RTR_MPI
   signal (SIGINT, userInterrupt);
+#endif
 
   /*
    * read instance
@@ -193,6 +209,10 @@ int main (int argc, char **argv) {
   free (output);
 
   clearLP (&lp);
+
+#ifdef RTR_MPI
+  MPI_Finalize ();
+#endif
 
   return 0;
 }

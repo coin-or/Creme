@@ -19,6 +19,12 @@
 #include "rtr.h"
 #include "misc.h"
 
+#ifdef RTR_MPI
+#include <mpi.h>
+
+enum {RTR_INIT_SIZE, RTR_INIT_INT, RTR_INIT_DOUBLE};
+#endif
+
 /*
  * scan sequence of bzip2'ed files (each contains a subset of rows),
  * partition into chunks and send them
@@ -121,6 +127,9 @@ int read_problem (sparseLP *lp,    /* LP data   */
     bcast [2] = lp -> r0;
     bcast [3] = lp -> ncpus;
 
+#ifdef RTR_MPI
+    MPI_Bcast (bcast, 4, MPI_INT, 0, MPI_COMM_WORLD); // 0 is the master node
+#endif
 
     /*
      * create double and int buffers for the data to be sent to slaves
@@ -337,6 +346,14 @@ int read_problem (sparseLP *lp,    /* LP data   */
       bcast [1] = pos_i;
       bcast [2] = currow;
 
+#ifdef RTR_MPI
+      if (i < lp -> ncpus - 1) {
+	MPI_Send (bcast, 3,     MPI_INT,    i+1, RTR_INIT_SIZE,   MPI_COMM_WORLD);
+	MPI_Send (bufd,  pos_d, MPI_DOUBLE, i+1, RTR_INIT_DOUBLE, MPI_COMM_WORLD);
+	MPI_Send (bufi,  pos_i, MPI_INT,    i+1, RTR_INIT_INT,    MPI_COMM_WORLD);
+      }
+#endif
+
       bufd  = (double *) realloc (bufd, (size_d  = pos_d)  * sizeof (double));
       bufi  = (int    *) realloc (bufi, (size_i  = pos_i)  * sizeof (int));
       rlb   = (double *) realloc (rlb,  (size_rl = currow) * sizeof (double));
@@ -376,6 +393,35 @@ int read_problem (sparseLP *lp,    /* LP data   */
     BZ2_bzReadClose (&status, bzf);
 
     fclose (f);
+
+  } else {
+
+#ifdef RTR_MPI
+    MPI_Status status;
+
+    MPI_Bcast (bcast, 4, MPI_INT, 0, MPI_COMM_WORLD);
+
+    nnz         = bcast [0];
+    lp -> c0    = bcast [1];
+    lp -> r0    = bcast [2];
+    lp -> ncpus = bcast [3];
+
+    //
+    // Stay idle until my own data comes...
+    //
+
+    MPI_Recv (bcast, 3, MPI_INT, 0, RTR_INIT_SIZE, MPI_COMM_WORLD, &status);
+
+    pos_d = size_d = bcast [0];
+    pos_i = size_i = bcast [1];
+    currow         = bcast [2];
+
+    bufi = (int    *) malloc (size_i * sizeof (int));
+    bufd = (double *) malloc (size_d * sizeof (double));
+
+    MPI_Recv (bufd, size_d, MPI_DOUBLE, 0, RTR_INIT_DOUBLE, MPI_COMM_WORLD, &status);
+    MPI_Recv (bufi, size_i, MPI_INT,    0, RTR_INIT_INT,    MPI_COMM_WORLD, &status);
+#endif
   }
 
   /*
