@@ -191,43 +191,6 @@ int bzgetdbl (BZFILE *f, double *val) {
   return 0;
 }
 
-
-///////////////////////////
-//
-// get integer from .bz2 file
-//
-
-inline int bzgetint (BZFILE *b, register int *val) {
-
-  double x;
-  register int ret_val;
-
-  ret_val = bzgetdbl (b, &x);
-
-  *val = floor (x);
-
-  return ret_val;
-}
-
-
-/////////////////////////////////////////////////////////
-//
-// Auxiliary functions to reallocate vectors of double/int
-//
-
-inline void reallocate_double (int req, int *size, double **buf) {
-
-  if (req >= *size)
-    *buf = (double *) realloc (*buf, (*size = (MALLOC_BLOCK * (req/MALLOC_BLOCK + 1))) * sizeof (double));
-}
-
-inline void reallocate_int (int req, int *size, int **buf) {
-
-  if (req >= *size)
-    *buf = (int *) realloc (*buf, (*size = (MALLOC_BLOCK * (req/MALLOC_BLOCK + 1))) * sizeof (int));
-}
-
-
 /*
  * Transpose coefficient matrix
  */
@@ -289,17 +252,4 @@ void create_transpose (sparseLP *lp) {
     *vp = (int    *) realloc (*vp, *vl * sizeof (int));
     *vc = (double *) realloc (*vc, *vl * sizeof (double));
   }
-}
-
-
-//////////////////////////////////////
-//
-// Get the norm of a vector of size l
-//
-
-static inline double get_norm (register double *v, register int l) {
-
-  register double norm = 0;
-  for (; l>0; --l, ++v) norm += *v * *v;
-  return sqrt (norm);
 }
