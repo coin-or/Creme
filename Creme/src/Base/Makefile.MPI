@@ -1,0 +1,72 @@
+CFLAGS :=
+#CFLAGS += -DRTR_MPI
+#CFLAGS += -DRTR_USE_PRAGMAS
+
+LDFLAGS :=
+
+UNAME := $(shell uname)
+MACH := $(shell uname -m)
+
+ifeq ($(UNAME),Linux)
+	ifeq ($(MACH),ppc64)
+		CC := blrts_xlc
+#		CFLAGS += -g
+		CFLAGS += -qbgl
+		CFLAGS += -O5 -qipa -qhot -qarch=440d -qtune=440 -qhot=simd
+		-qcache=level=1:type=i:size=32:line=32:assoc=64:cost=8
+		-qcache=level=1:type=d:size=32:line=32:assoc=64:cost=8
+		CFLAGS += -I/opt/bglsys/include 
+		CFLAGS += -I${HOME}/.include
+
+		LDFLAGS += -L${HOME}/.lib
+		LDFLAGS +=	-lbz2
+		LDFLAGS += -L/opt/bglsys/lib 
+		LDFLAGS +=	-lmpich.rts 
+		LDFLAGS += 	-lmsglayer.rts 
+		LDFLAGS +=	-lrts.rts
+		LDFLAGS +=	-ldevices.rts
+	else
+		CC := gcc
+#		CFLAGS += -O3 -Wall -I/usr/local/mpich/include -Wunknown-pragmas -W
+		CFLAGS += -g -Wall -I/usr/local/mpich/include -Wunknown-pragmas -W
+		ifeq ($(findstring -DRTR_MPI,$(CFLAGS)),-DRTR_MPI)
+#			LDFLAGS += -L/usr/local/mpich-1.2.7-shmem/lib -lmpich
+			LDFLAGS += -L/usr/local/mpich/lib -lmpich
+		endif
+		LDFLAGS += -lbz2 -lm
+	endif
+endif
+
+HOMEBIN=${HOME}/.usr/bin
+#HOMEBIN=.
+
+OBJ = rtr.o init.o linopt.o locsrch.o \
+      lpio.o main.o move.o cmdline.o
+
+HEADER = graph.h no.h
+
+all: ${HOMEBIN}/rtr ${HOMEBIN}/gen-acyclic ${HOMEBIN}/gen-acyclic-sparse ${HOMEBIN}/readbz 
+
+${HOMEBIN}/gen-acyclic: gen-acyclic.o
+	@echo Linking $(@F)
+	@$(CC) -o ${HOMEBIN}/gen-acyclic gen-acyclic.o $(LDFLAGS)
+
+${HOMEBIN}/gen-acyclic-sparse: gen-acyclic-sparse.o
+	@echo Linking $(@F)
+	@$(CC) -o ${HOMEBIN}/gen-acyclic-sparse gen-acyclic-sparse.o $(LDFLAGS)
+
+${HOMEBIN}/readbz: readbz.o lpio.o
+	@echo Linking $(@F)
+	@$(CC) -o ${HOMEBIN}/readbz readbz.o lpio.o $(LDFLAGS)
+
+${HOMEBIN}/rtr: ${OBJ} 
+	@echo Linking $(@F)
+	@$(CC) -o ${HOMEBIN}/rtr $(OBJ) $(LDFLAGS)
+
+%.o: %.c 
+	@echo [${CC}] $<
+	@$(CC) $(CFLAGS) -c $< 
+
+clean:
+	@echo Cleaning up
+	@rm -f $(OBJ) gen-acyclic.o gen-acyclic-sparse.o
